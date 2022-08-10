@@ -12,24 +12,24 @@
 
 <body>
     <div id="container">
-        <div><span>CHOOSE ONE OF THE THREE</span></div>
+        <div id="cta"><span>CHOOSE ONE OF THE THREE</span></div>
         <div id="weapons">
-            <div id="rock" class="weapon"><img src="./images/rock.png" alt="rock"></div>
-            <div id="paper" class="weapon"><img src="./images/paper.png" alt="paper"></div>
-            <div id="scissors" class="weapon"><img src="./images/scissors.png" alt="scissors"></div>
+            <div class="weapon"><img src="./images/rock.png" alt="rock" id="rock"></div>
+            <div class="weapon"><img src="./images/paper.png" alt="paper" id="paper"></div>
+            <div class="weapon"><img src="./images/scissors.png" alt="scissors" id="scissors"></div>
         </div>
         <div id="startGame"><span>Round X</span></div>
         <div id="scoreDetails">
             <div id="scoreNumbers">
                 <span>You</span>
-                <span>1:0</span>
+                <span id="scorePlayerComputer">1:0</span>
                 <span>Bot</span>
             </div>
 
             <div id="scoreWeapons">
-                <div class="weapon"><img src="./images/rock.png"></div>
+                <div class="weapon" id="weaponPlayer"><img src="./images/rock.png"></div>
                 <span> : </span>
-                <div class="weapon"><img src="./images/scissors.png">
+                <div class="weapon" id="weaponComputer"><img src="./images/scissors.png">
                 </div>
             </div>
         </div>

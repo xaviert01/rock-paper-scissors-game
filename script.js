@@ -1,5 +1,16 @@
-// Start rock, paper, or scissors game when player clicks on button with "gameStart" id. 
-document.getElementById("gameStart").addEventListener("click", playRound);
+function hideElements() {
+    document.getElementById("weapons").style.visibility = "hidden";
+    document.getElementById("scoreDetails").style.visibility = "hidden";
+    document.getElementById("playAgain").style.visibility = "hidden";
+    document.getElementById("cta").style.visibility = "hidden";
+    document.querySelector("#startGame > span").textContent = "CLICK TO PLAY!";
+}
+
+hideElements();
+
+// Start rock, paper, or scissors game when player clicks on div with "startGame" id. 
+
+document.getElementById("startGame").addEventListener("click", playRound);
 
 // Start game. 
 function playRound() {
@@ -19,29 +30,25 @@ function playRound() {
     // Create variable storing the number of rounds and give it initial value of 0. 
     let i = 0;
 
-    // Create boolean variable informing if another round should happen.
-    let keepGoing;
+    document.getElementById("weapons").style.visibility = "initial";
+    document.getElementById("cta").style.visibility = "initial";
+    document.querySelector("#startGame > span").textContent = "Round 1/5";
 
     // Ask player to select "rock", "paper", or "scissors". 
-    function playerSelection() {
 
-        // Prompt player to "Choose one of the three - rock, paper, or scissors" and store response in playerChoice variable. Convert the string to lower case. 
-        playerChoice = prompt("Choose one of the three - rock, paper, or scissors").toLowerCase();
 
-        // Display an alert "You must have made a typo." and call playerSelection() function if player didn't provide allowed string.
-        if (!(playerChoice === "rock" || playerChoice === "paper" || playerChoice === "scissors")) {
-            alert("You must have made a typo.")
-            playerSelection();
-        }
-
-        // If player provided allowed string, return playerChoice variable.
-        else {
-            return (playerChoice);
-        }
-    }
+    let weapons = document.querySelectorAll("#weapons > .weapon > img");
+    weapons.forEach(weapon => {
+        weapon.addEventListener("click", (event) => {
+            playerChoice = `${event.target.id}`;
+            document.querySelector("#startGame > span").textContent = `Round ${i + 1}/5`;
+            game();
+        });
+    })
 
     // Randomly select "rock", "paper", or "scissors" for computer (player's opponent).
     function getComputerChoice() {
+
 
         // Create array with three choices. 
         let gameArray = [
@@ -55,15 +62,17 @@ function playRound() {
 
         // Return computerChoice variable.
         return (computerChoice);
+
     }
 
     // Play round. 
     function game() {
 
         // If player and computer selected the same string, add 1 to playerScore and computerScore variables.
-        if (playerSelection() === getComputerChoice()) {
+        if (playerChoice === getComputerChoice()) {
             playerScore++;
             computerScore++;
+            i++;
         }
 
         // If player selected string that wins with computer's string, add 1 to playerScore. 
@@ -73,22 +82,34 @@ function playRound() {
             (playerChoice === "scissors" && computerChoice === "paper")
         ) {
             playerScore++;
+            i++;
         }
 
         // If computer selected string that wins with player's string, add 1 to computerScore.
         else {
             computerScore++;
+            i++;
         }
 
-        // Alert user about string s/he chose, string computer chose, current score, and round number, in separate lines. 
-        alert(`Your choice was ${playerChoice}.
-        \nComputer's choice was ${computerChoice}.
-        \nCurrent score is: You ${playerScore} : ${computerScore} Computer.
-        \nRound ${i + 1}/5.`);
+        updateScore();
+        checkIfFinished();
+
     }
 
+    function updateScore() {
+        document.querySelector("#weaponPlayer > img").src = "./images/" + playerChoice + ".png";
+
+        document.querySelector("#weaponComputer > img").src = "./images/" + computerChoice + ".png";
+
+        document.getElementById("scorePlayerComputer").textContent = `${playerScore} : ${computerScore}`;
+
+        document.getElementById("scoreDetails").style.visibility = "visible";
+
+    }
+
+
     // Set value of boolean variable keepGoing, which informs whether another round should happen.
-    function setKeepGoing() {
+    function checkIfFinished() {
 
         // List conditions when another round should not happen.
         if (
@@ -99,8 +120,6 @@ function playRound() {
             // 5 rounds happened. 
             (i === 5)
         ) {
-            // If any of above condtions was met, set value of keepGoing variable to false. 
-            keepGoing = false;
 
             // Call getResult() function to inform player about result. 
             getResult();
@@ -108,40 +127,45 @@ function playRound() {
 
         // If none of above condtions was met, set value of keepGoing variabe to true. 
         else {
-            keepGoing = true;
+            return;
         }
-
-        // Return value of keepGoing variable. 
-        return (keepGoing);
-    }
-
-    // While keepGoing variable is true, call game() function to play round. 
-    while (setKeepGoing() === true) {
-        game();
-
-        // After every round add 1 to i variable, which counts the number of rounds that have been played. 
-        i++;
     }
 
     // Inform player about result.
     function getResult() {
 
+        document.getElementById("weapons").style.visibility = "hidden";
+        document.getElementById("scoreDetails").style.visibility = "hidden";
+        document.getElementById("playAgain").style.visibility = "visible";
+        document.getElementById("cta").style.visibility = "visible";
+
+        document.getElementById("playAgain").addEventListener("click", () => document.location.reload(true));
+
         // If player won, inform player that s/he won and display score. 
         if (playerScore > computerScore) {
-            alert(`You won ${playerScore}:${computerScore}. 
-            \nI'm proud, son!`);
+
+            document.querySelector("#startGame > span").textContent = `You won ${playerScore}:${computerScore}`;
+
+            document.querySelector("#cta > span").textContent = "I'm proud, son!";
         }
 
         // If player lost, inform player that s/he lost and display score. 
         else if (playerScore < computerScore) {
-            alert(`You lost ${playerScore}:${computerScore}. 
-            \nI'm so sorry.`);
+
+            document.querySelector("#startGame > span").textContent = `You lost ${playerScore}:${computerScore}.`;
+
+            document.querySelector("#cta > span").textContent = "I'm so sorry.";
+
         }
 
         // If there was a draw, inform player about the draw and display score. 
         else {
-            alert(`Draw ${playerScore}:${computerScore}.`);
+            document.querySelector("#startGame > span").textContent = `Draw ${playerScore}:${computerScore}.`;
+
+            document.querySelector("#cta > span").textContent = "What a boring game.";
         }
     }
+
+
 
 }
