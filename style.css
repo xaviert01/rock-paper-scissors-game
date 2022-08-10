@@ -57,6 +57,19 @@ img {
     width: 260px;
 }
 
+#weapons>.weapon:hover {
+    transform: scale(1.05);
+}
+
+.weapon>img:hover {
+    border-color: red;
+}
+
+.weapon>img:active {
+    border-color: red;
+    background-color: orange;
+}
+
 #scoreWeapons>.weapon {
     width: 130px;
 }
@@ -70,10 +83,14 @@ span {
     background-color: white;
 }
 
-footer>a:link,
-footer>a:visited,
-footer>a:hover,
-footer>a:active {
+footer {
+    font-size: 0.8rem;
+}
+
+footer>p>a:link,
+footer>p>a:visited,
+footer>p>a:hover,
+footer>p>a:active {
     text-decoration: none;
     color: inherit;
 }

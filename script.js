@@ -101,7 +101,7 @@ function playRound() {
 
         document.querySelector("#weaponComputer > img").src = "./images/" + computerChoice + ".png";
 
-        document.getElementById("scorePlayerComputer").textContent = `${playerScore} : ${computerScore}`;
+        document.getElementById("scorePlayerComputer").textContent = `${playerScore}:${computerScore}`;
 
         document.getElementById("scoreDetails").style.visibility = "visible";
 
@@ -147,6 +147,9 @@ function playRound() {
             document.querySelector("#startGame > span").textContent = `You won ${playerScore}:${computerScore}`;
 
             document.querySelector("#cta > span").textContent = "I'm proud, son!";
+
+            var audio = new Audio('success-fanfare-trumpets-6185.mp3');
+            audio.play();
         }
 
         // If player lost, inform player that s/he lost and display score. 
@@ -156,6 +159,9 @@ function playRound() {
 
             document.querySelector("#cta > span").textContent = "I'm so sorry.";
 
+            var audio = new Audio('videogame-death-sound-43894.mp3');
+            audio.play();
+
         }
 
         // If there was a draw, inform player about the draw and display score. 
@@ -163,6 +169,9 @@ function playRound() {
             document.querySelector("#startGame > span").textContent = `Draw ${playerScore}:${computerScore}.`;
 
             document.querySelector("#cta > span").textContent = "What a boring game.";
+
+            var audio = new Audio('yawn-42499.mp3');
+            audio.play();
         }
     }
 
