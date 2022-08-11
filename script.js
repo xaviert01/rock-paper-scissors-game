@@ -16,7 +16,7 @@ function hideElements() {
     weapons.style.visibility = "hidden";
     scoreDetails.style.visibility = "hidden";
     playAgain.style.visibility = "hidden";
-    cta.style.visibility = "hidden";
+    ctaSpan.textContent = "ROCK PAPER SCISSORS";
     startGameSpan.textContent = "CLICK TO PLAY!";
 }
 
@@ -44,10 +44,11 @@ function playRound() {
 
     // Step 2 in the flow - unhide weapons and cta, hide footer, change text of startGameSpan.
     weapons.style.visibility = "initial";
-    cta.style.visibility = "initial";
     footer.style.visibility = "hidden";
+    ctaSpan.textContent = "CHOOSE ONE OF THE THREE";
     startGameSpan.textContent = "Round 1/5";
     startGame.removeEventListener("click", playRound);
+    startGame.classList.toggle("pointer");
 
     // Add click listener to all weaponImages; store player's choices, update round count, call game() function.   
     weaponImages.forEach(weaponImage => {

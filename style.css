@@ -9,6 +9,7 @@ body {
     width: 100vw;
     height: 100vh;
     text-align: center;
+    cursor: default;
 }
 
 @media (max-width: 500px) {
@@ -74,6 +75,7 @@ img {
 
 #weapons>.weapon:hover {
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 #weapons>.weapon>img:hover {
@@ -108,4 +110,8 @@ footer>p>a:hover,
 footer>p>a:active {
     text-decoration: none;
     color: inherit;
+}
+
+.pointer:hover {
+    cursor: pointer;
 }
