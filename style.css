@@ -61,11 +61,11 @@ img {
     transform: scale(1.05);
 }
 
-.weapon>img:hover {
+#weapons>.weapon>img:hover {
     border-color: red;
 }
 
-.weapon>img:active {
+#weapons>.weapon>img:active {
     border-color: red;
     background-color: orange;
 }

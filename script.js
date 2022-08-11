@@ -1,18 +1,29 @@
+const weapons = document.getElementById("weapons");
+const scoreDetails = document.getElementById("scoreDetails");
+const playAgain = document.getElementById("playAgain");
+const cta = document.getElementById("cta")
+const startGame = document.getElementById("startGame");
+const startGameSpan = document.querySelector("#startGame > span");
+const weaponImages = document.querySelectorAll("#weapons > .weapon > img");
+const playerImage = document.querySelector("#weaponPlayer > img");
+const computerImage = document.querySelector("#weaponComputer > img");
+const scorePlayerComputer = document.getElementById("scorePlayerComputer");
+const ctaSpan = document.querySelector("#cta > span");
+
+// Step 1 in the flow - hide all DOM elements other than startGameSpan and footer.
 function hideElements() {
-    document.getElementById("weapons").style.visibility = "hidden";
-    document.getElementById("scoreDetails").style.visibility = "hidden";
-    document.getElementById("playAgain").style.visibility = "hidden";
-    document.getElementById("cta").style.visibility = "hidden";
-    document.querySelector("#startGame > span").textContent = "CLICK TO PLAY!";
+    weapons.style.visibility = "hidden";
+    scoreDetails.style.visibility = "hidden";
+    playAgain.style.visibility = "hidden";
+    cta.style.visibility = "hidden";
+    startGameSpan.textContent = "CLICK TO PLAY!";
 }
 
 hideElements();
 
-// Start rock, paper, or scissors game when player clicks on div with "startGame" id. 
+// Start rock paper scissors when player clicks startGame. 
+startGame.addEventListener("click", playRound);
 
-document.getElementById("startGame").addEventListener("click", playRound);
-
-// Start game. 
 function playRound() {
 
     // Create variable storing player's score and give it initial value of 0. 
@@ -30,25 +41,22 @@ function playRound() {
     // Create variable storing the number of rounds and give it initial value of 0. 
     let i = 0;
 
-    document.getElementById("weapons").style.visibility = "initial";
-    document.getElementById("cta").style.visibility = "initial";
-    document.querySelector("#startGame > span").textContent = "Round 1/5";
+    // Step 2 in the flow - unhide weapons and cta, and change text of startGameSpan.
+    weapons.style.visibility = "initial";
+    cta.style.visibility = "initial";
+    startGameSpan.textContent = "Round 1/5";
 
-    // Ask player to select "rock", "paper", or "scissors". 
-
-
-    let weapons = document.querySelectorAll("#weapons > .weapon > img");
-    weapons.forEach(weapon => {
-        weapon.addEventListener("click", (event) => {
+    // Add click listener to all weaponImages; store player's choices, update round count, call game() function.   
+    weaponImages.forEach(weaponImage => {
+        weaponImage.addEventListener("click", (event) => {
             playerChoice = `${event.target.id}`;
-            document.querySelector("#startGame > span").textContent = `Round ${i + 1}/5`;
+            startGameSpan.textContent = `Round ${i + 1}/5`;
             game();
         });
-    })
+    });
 
     // Randomly select "rock", "paper", or "scissors" for computer (player's opponent).
     function getComputerChoice() {
-
 
         // Create array with three choices. 
         let gameArray = [
@@ -62,7 +70,6 @@ function playRound() {
 
         // Return computerChoice variable.
         return (computerChoice);
-
     }
 
     // Play round. 
@@ -97,20 +104,23 @@ function playRound() {
     }
 
     function updateScore() {
-        document.querySelector("#weaponPlayer > img").src = "./images/" + playerChoice + ".png";
 
-        document.querySelector("#weaponComputer > img").src = "./images/" + computerChoice + ".png";
+        // Show player-selected weapon. 
+        playerImage.src = "./images/" + playerChoice + ".png";
 
-        document.getElementById("scorePlayerComputer").textContent = `${playerScore}:${computerScore}`;
+        // Show computer-selected weapon.
+        computerImage.src = "./images/" + computerChoice + ".png";
 
-        document.getElementById("scoreDetails").style.visibility = "visible";
+        // Show current score. 
+        scorePlayerComputer.textContent = `${playerScore}:${computerScore}`;
+
+        // Step 3 in the flow - unhide scoreDetails.
+        scoreDetails.style.visibility = "visible";
 
     }
 
-
-    // Set value of boolean variable keepGoing, which informs whether another round should happen.
+    // Check if the game should finish. 
     function checkIfFinished() {
-
         // List conditions when another round should not happen.
         if (
             // 3 rounds happened and one party wins by 3 points. 
@@ -120,12 +130,10 @@ function playRound() {
             // 5 rounds happened. 
             (i === 5)
         ) {
-
             // Call getResult() function to inform player about result. 
             getResult();
         }
-
-        // If none of above condtions was met, set value of keepGoing variabe to true. 
+        // If none of above condtions was met, continue playing. 
         else {
             return;
         }
@@ -134,47 +142,45 @@ function playRound() {
     // Inform player about result.
     function getResult() {
 
-        document.getElementById("weapons").style.visibility = "hidden";
-        document.getElementById("scoreDetails").style.visibility = "hidden";
-        document.getElementById("playAgain").style.visibility = "visible";
-        document.getElementById("cta").style.visibility = "visible";
+        // Step 4 in the flow - unhide cta, hide weapons, scoreDetails, and playAgain.
+        weapons.style.visibility = "hidden";
+        scoreDetails.style.visibility = "hidden";
+        playAgain.style.visibility = "visible";
+        cta.style.visibility = "visible";
 
-        document.getElementById("playAgain").addEventListener("click", () => document.location.reload(true));
+        playAgain.addEventListener("click", () => document.location.reload(true));
 
-        // If player won, inform player that s/he won and display score. 
+        // If player won, inform player that s/he won, display score, and play victory sound.
         if (playerScore > computerScore) {
 
-            document.querySelector("#startGame > span").textContent = `You won ${playerScore}:${computerScore}`;
+            startGameSpan.textContent = `You won ${playerScore}:${computerScore}`;
 
-            document.querySelector("#cta > span").textContent = "I'm proud, son!";
+            ctaSpan.textContent = "I'm proud, son!";
 
-            var audio = new Audio('success-fanfare-trumpets-6185.mp3');
+            var audio = new Audio('./sounds/success-fanfare-trumpets-6185.mp3');
             audio.play();
         }
 
-        // If player lost, inform player that s/he lost and display score. 
+        // If player lost, inform player that s/he lost, display score, and play failure sound.
         else if (playerScore < computerScore) {
 
-            document.querySelector("#startGame > span").textContent = `You lost ${playerScore}:${computerScore}.`;
+            startGameSpan.textContent = `You lost ${playerScore}:${computerScore}`;
 
-            document.querySelector("#cta > span").textContent = "I'm so sorry.";
+            ctaSpan.textContent = "I'm so sorry.";
 
-            var audio = new Audio('videogame-death-sound-43894.mp3');
+            var audio = new Audio('./sounds/videogame-death-sound-43894.mp3');
             audio.play();
 
         }
 
-        // If there was a draw, inform player about the draw and display score. 
+        // If there was a draw, inform player about the draw, display score, and play yawn soud. 
         else {
-            document.querySelector("#startGame > span").textContent = `Draw ${playerScore}:${computerScore}.`;
+            startGameSpan.textContent = `Draw ${playerScore}:${computerScore}`;
 
-            document.querySelector("#cta > span").textContent = "What a boring game.";
+            ctaSpan.textContent = "What a boring game.";
 
-            var audio = new Audio('yawn-42499.mp3');
+            var audio = new Audio('./sounds/yawn-42499.mp3');
             audio.play();
         }
     }
-
-
-
 }
