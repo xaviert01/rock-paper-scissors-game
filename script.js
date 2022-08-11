@@ -9,6 +9,7 @@ const playerImage = document.querySelector("#weaponPlayer > img");
 const computerImage = document.querySelector("#weaponComputer > img");
 const scorePlayerComputer = document.getElementById("scorePlayerComputer");
 const ctaSpan = document.querySelector("#cta > span");
+const footer = document.querySelector("footer");
 
 // Step 1 in the flow - hide all DOM elements other than startGameSpan and footer.
 function hideElements() {
@@ -41,9 +42,10 @@ function playRound() {
     // Create variable storing the number of rounds and give it initial value of 0. 
     let i = 0;
 
-    // Step 2 in the flow - unhide weapons and cta, and change text of startGameSpan.
+    // Step 2 in the flow - unhide weapons and cta, hide footer, change text of startGameSpan.
     weapons.style.visibility = "initial";
     cta.style.visibility = "initial";
+    footer.style.visibility = "hidden";
     startGameSpan.textContent = "Round 1/5";
 
     // Add click listener to all weaponImages; store player's choices, update round count, call game() function.   
@@ -147,6 +149,7 @@ function playRound() {
         scoreDetails.style.visibility = "hidden";
         playAgain.style.visibility = "visible";
         cta.style.visibility = "visible";
+        startGame.removeEventListener("click", playRound);
 
         playAgain.addEventListener("click", () => document.location.reload(true));
 
