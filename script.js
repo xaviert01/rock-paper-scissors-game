@@ -47,6 +47,7 @@ function playRound() {
     cta.style.visibility = "initial";
     footer.style.visibility = "hidden";
     startGameSpan.textContent = "Round 1/5";
+    startGame.removeEventListener("click", playRound);
 
     // Add click listener to all weaponImages; store player's choices, update round count, call game() function.   
     weaponImages.forEach(weaponImage => {
@@ -149,7 +150,6 @@ function playRound() {
         scoreDetails.style.visibility = "hidden";
         playAgain.style.visibility = "visible";
         cta.style.visibility = "visible";
-        startGame.removeEventListener("click", playRound);
 
         playAgain.addEventListener("click", () => document.location.reload(true));
 
